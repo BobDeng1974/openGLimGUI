@@ -39,13 +39,13 @@ bool Shader::compileShader()
 		GLchar* cstr = new GLchar[len];
 		glGetShaderInfoLog(shaderID, len, &len, cstr);
 		std::string log(cstr);
-		std::cout << "Shader Error: \n" << log << std::endl;
+		std::cout << "Shader ID: " << shaderID << " -> failed\n" "======================\n" << log << std::endl;
 		delete[] cstr;
 		success = false;
 	}
 	else{
 		compiled = true;
-		std::cout << "Shader ID: " << shaderID << "-> compiled\n";
+		std::cout << "Shader ID: " << shaderID << " -> compiled\n";
 	}
 
 	return success;

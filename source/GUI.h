@@ -1,21 +1,22 @@
 #pragma once
 #include <GL\glew.h>
 #include <GLFW/glfw3.h>
-#include "imgui\imgui.h"
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define GLFW_EXPOSE_NATIVE_WGL
 #include <GLFW/glfw3native.h>
 
+#include "imgui\imgui.h"
 
-class ImGUI
+class GUI
 {
 public:
-	ImGUI();
-	~ImGUI();
+	GUI();
+	~GUI();
 
 	void Render();
 	void LinkWindow(GLFWwindow* window);
+	bool Init(GLFWwindow* window, bool install_callbacks);
 
 private:
 
@@ -26,10 +27,10 @@ private:
 	void				ScrollCallback(GLFWwindow*, double yoffset);
 	void				KeyCallback(GLFWwindow*, int key, int, int action, int mods);
 	void				CharCallback(GLFWwindow*, unsigned int c);
-	void				CreateFontsTexture();
+	bool				CreateFontsTexture();
 	bool				CreateDeviceObjects();
 	void				InvalidateDeviceObjects();
-	bool				Init(GLFWwindow* window, bool install_callbacks);
+	
 	void				Shutdown();
 	void				PrepareNewFrame();
 

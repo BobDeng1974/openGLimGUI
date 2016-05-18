@@ -7,9 +7,9 @@
 #include <vector>
 #include "imgui\imgui.h"
 #include "Program.h"
+#include "GUI.h"
 
 static void error_callback(int error, const char* description);
-void init();
 
 static void error_callback(int error, const char* description)
 {
@@ -40,6 +40,8 @@ int main(int, char**)
 	glEnable(GL_DEPTH_TEST); 
 	glDepthFunc(GL_LESS);
 
+	GUI gui;
+	gui.Init(window, false);
 
 	float vertices[] = {
 		-0.5,  -0.5,	0,
@@ -69,16 +71,19 @@ int main(int, char**)
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glClearColor(0.3, 0.3, 0.3, 1.0);
 
 
 	while (!glfwWindowShouldClose(window)){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		shaderProgram.use();
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLES, 0, 18);
-
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
+		gui.Render();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
