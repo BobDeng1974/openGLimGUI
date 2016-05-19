@@ -1,4 +1,0 @@
-﻿  main.cpp
-f:\programming\c++\git\openglimgui\source\main.cpp(117): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
-  openGLimGUI.vcxproj -> F:\Programming\C++\Git\openGLimGUI\proj\openGLimGUI\Debug\openGLimGUI.exe
-  openGLimGUI.vcxproj -> F:\Programming\C++\Git\openGLimGUI\proj\openGLimGUI\Debug\openGLimGUI.pdb (Partial PDB)
