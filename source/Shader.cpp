@@ -18,6 +18,9 @@ void Shader::loadSourceFromFile(std::string path, int shaderType)
 	std::string s((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
 
 	source = s;
+	if(!source.empty())
+		sourceLoaded = true;
+
 	this->shaderType = shaderType;
 }
 

@@ -12,6 +12,9 @@ public:
 	void attachShader(Shader* shdr);
 	void use();
 	void linkProgram();
+	int getID() {
+		return programID;
+	}
 
 private:
 

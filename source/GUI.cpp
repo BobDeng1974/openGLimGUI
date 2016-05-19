@@ -171,7 +171,7 @@ void GUI::Render()
 	}
 
 	ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-	ImGui::ShowTestWindow();
+	//ImGui::ShowTestWindow();
 	//ImGui::End();
 	ImGui::Render();
 	RenderDrawLists(ImGui::GetDrawData());
