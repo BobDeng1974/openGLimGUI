@@ -30,11 +30,12 @@ void versionPrint(){
 int main(int, char**)
 {
 
-	int width = 900;
+	int width = 1080;
 	int height = 900;
 	
 	if (!glfwInit()){ std::cout << "ERROR: glfwInit failed\n"; return -1; }
 
+	
 	GLFWwindow* window = glfwCreateWindow(width, height, "mesh", NULL, NULL);
 	if (!window){ std::cout << "ERROR: window was not created\n"; return -1; }
 	glfwMakeContextCurrent(window);
@@ -46,6 +47,7 @@ int main(int, char**)
 
 	glEnable(GL_DEPTH_TEST); 
 	glDepthFunc(GL_LESS);
+	//glEnable(GL_CULL_FACE);
 
 	GUI gui;
 	gui.Init(window, false);
@@ -67,8 +69,8 @@ int main(int, char**)
 	//std::string mtlfile = resourcePath + "teapot/teapot.mtl";
 	//std::string inputfile = resourcePath + "sphere/sphere.obj";
 	//std::string mtlfile = resourcePath + "sphere/sphere.mtl";
-	//std::string inputfile = resourcePath + "dragon/dragon.obj";
-	std::string inputfile = resourcePath + "monkey/monkey.obj";
+	std::string inputfile = resourcePath + "dragon/dragon.obj";
+	//std::string inputfile = resourcePath + "monkey/monkey.obj";
 	//std::string mtlfile = resourcePath + "monkey/monkey.mtl";
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
@@ -90,9 +92,11 @@ int main(int, char**)
 						glm::vec3(0.0f, 0.0f, 0.0f),
 						glm::vec3(0.0f, 1.0f, 0.0f));
 
-	glm::mat4 projection = glm::perspective(45.0f, (float)height/(float)width, 0.01f, 1000.0f);
+	glm::mat4 projection = glm::perspective(45.0f, (float)width/(float)height, 0.01f, 1000.0f);
 
 	glm::mat4 model = glm::mat4();
+	float s = 1.0f;
+	model = glm::scale(model, glm::vec3(s, s, s));
 
 	std::string shaderPath = "../../../source/shaders/";
 	Program shaderProgram;
@@ -142,12 +146,12 @@ int main(int, char**)
 	while (!glfwWindowShouldClose(window)){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		shaderProgram.use();
 		glBindVertexArray(vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elems);
 
-		model = glm::rotate(model, 0.001f, glm::vec3(0, 1, 0));
+		model = glm::rotate(model, 0.0001f, glm::vec3(0, 1, 0));
 		
 		glUniformMatrix4fv(ModelMatrixHandle, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(ViewMatrixHandle, 1, GL_FALSE, glm::value_ptr(view));
@@ -156,7 +160,7 @@ int main(int, char**)
 		glDrawElements(GL_TRIANGLES, shapes[0].mesh.indices.size(),GL_UNSIGNED_INT,(void*)0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		
-		gui.Render();
+		gui.Render(&shapes);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

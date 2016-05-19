@@ -155,7 +155,7 @@ bool GUI::Init(GLFWwindow* window, bool install_callbacks)
 	return true;
 }
 
-void GUI::Render()
+void GUI::Render(std::vector<tinyobj::shape_t>* shapes)
 {
 	PrepareNewFrame();
 
@@ -169,8 +169,27 @@ void GUI::Render()
 		ImGui::ColorEdit3("clear color", (float*)&clear_color);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	}
+	bool* opened = false;
+	ImGui::SetNextWindowPos(ImVec2(10, 10));
+	if (!ImGui::Begin("Example: Fixed Overlay", opened, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings))
+	{
+		ImGui::End();
+		return;
+	}
+	ImGui::Text("Simple shape overlay");
+	ImGui::Separator();
+	ImGui::Text(("Shape name: " + (*shapes)[0].name).c_str());
 
-	ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+	/*int s = (*shapes)[0].mesh.positions.size();
+	std::stringstream size;
+	size << "Number of vertices: " << s ;*/
+	//ImGui::Text(size.str().c_str());
+	ImGui::Text("Number of vertices: %i", (*shapes)[0].mesh.positions.size());
+	ImGui::Text("Number of triangles: %i", ((*shapes)[0].mesh.positions.size()/3));
+
+	ImGui::End();
+
+	//ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
 	//ImGui::ShowTestWindow();
 	//ImGui::End();
 	ImGui::Render();

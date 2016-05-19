@@ -7,6 +7,9 @@
 #include <GLFW/glfw3native.h>
 
 #include "imgui\imgui.h"
+#include <vector>
+#include <sstream>
+#include "tinyobjloader\tiny_obj_loader.h"
 
 class GUI
 {
@@ -14,7 +17,7 @@ public:
 	GUI();
 	~GUI();
 
-	void Render();
+	void Render(std::vector<tinyobj::shape_t>* shapes);
 	void LinkWindow(GLFWwindow* window);
 	bool Init(GLFWwindow* window, bool install_callbacks);
 
